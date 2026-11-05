@@ -19,6 +19,7 @@ function normalizeSkillSearch(text) {
 
 class CPRFichaAlternativa extends CPRCharacterActorSheet {
   #skillQuery = "";
+  #skillOptions = { dense: false, grouped: false, hideZero: false };
   #inventoryCategory = "ammo";
 
   static DEFAULT_OPTIONS = {
@@ -68,44 +69,80 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
     };
     sync();
     nav.addEventListener("click", sync);
-    this.#bindSkillSearch();
+    this.#bindSkillOptions();
     this.#bindInventoryCategories(context.altInventoryCategories);
   }
 
-  #bindSkillSearch() {
+  #bindSkillOptions() {
     const search = this.element.querySelector(".cpr-alt-skill-search input");
     if (!search) return;
 
+    const container = this.element.querySelector(".skills-container");
     const empty = this.element.querySelector(".cpr-alt-skill-empty");
-    const groups = this.element.querySelectorAll(".skills-container > .items-list > .collapsible");
-    search.value = this.#skillQuery;
+    const controls = this.element.querySelectorAll(".cpr-alt-skill-options input");
+    const collator = new Intl.Collator(game.i18n.lang, { sensitivity: "base", numeric: true });
+    const groups = Array.from(container.querySelectorAll(":scope > .items-list > .collapsible"), group => {
+      const list = group.querySelector(":scope > ol");
+      const skills = Array.from(list.querySelectorAll("li[data-skill-category]"), row => {
+        const roll = row.querySelector("a[data-roll-type='skill']");
+        const name = roll.textContent.trim();
+        const base = row.querySelector(".skill-base").textContent.trim();
+        roll.dataset.cprAltSkillBase = /^[+-]/.test(base) ? base : `+${base}`;
+        row.querySelector(".skill-input")?.setAttribute("aria-label", `Nível de ${name}`);
+        return { row, name, searchName: normalizeSkillSearch(name), itemName: roll.dataset.rollTitle };
+      });
+      return { group, list, skills };
+    });
+    const alphabetical = groups.flatMap(({ skills }) => skills).sort((a, b) => collator.compare(a.name, b.name));
+    const flatList = document.createElement("ol");
+    flatList.className = "items-list cpr-alt-flat-skills";
+    container.append(flatList);
+
+    const arrange = () => {
+      const { grouped } = this.#skillOptions;
+      container.classList.toggle("cpr-alt-skills-flat", !grouped);
+      flatList.hidden = grouped;
+      if (grouped) {
+        for (const { list, skills } of groups) list.append(...skills.map(({ row }) => row));
+      } else {
+        flatList.append(...alphabetical.map(({ row }) => row));
+      }
+    };
 
     const filter = () => {
       this.#skillQuery = search.value;
       const query = normalizeSkillSearch(search.value.trim());
+      const { hideZero, grouped } = this.#skillOptions;
       let matches = 0;
 
-      for (const group of groups) {
+      for (const { group, skills } of groups) {
         let groupMatches = 0;
-        for (const row of group.querySelectorAll("li[data-skill-category]")) {
-          if (!query) {
-            delete row.dataset.cprAltSkillFilter;
-            continue;
-          }
-
-          const name = row.querySelector("a[data-roll-type='skill']")?.textContent ?? "";
-          const match = normalizeSkillSearch(name).includes(query);
-          row.dataset.cprAltSkillFilter = match ? "match" : "hide";
+        for (const { row, searchName, itemName } of skills) {
+          const match = (!query || searchName.includes(query)) && (!hideZero || this.actor.getSkillLevel(itemName) !== 0);
+          if (!match) row.dataset.cprAltSkillFilter = "hide";
+          else if (query) row.dataset.cprAltSkillFilter = "match";
+          else delete row.dataset.cprAltSkillFilter;
           if (match) groupMatches += 1;
         }
 
-        if (query && !groupMatches) group.dataset.cprAltSkillFilter = "hide";
-        else delete group.dataset.cprAltSkillFilter;
+        group.hidden = grouped && Boolean(query || hideZero) && !groupMatches;
         matches += groupMatches;
       }
-
-      empty.hidden = !query || matches > 0;
+      empty.hidden = (!query && !hideZero) || matches > 0;
     };
+
+    search.value = this.#skillQuery;
+    for (const control of controls) {
+      const option = control.dataset.skillOption;
+      control.checked = this.#skillOptions[option];
+      control.addEventListener("change", (event) => {
+        event.stopPropagation();
+        this.#skillOptions[option] = control.checked;
+        if (option === "grouped") arrange();
+        if (option === "dense") container.classList.toggle("cpr-alt-skills-dense", control.checked);
+        filter();
+      });
+    }
 
     search.addEventListener("input", filter);
     search.addEventListener("keydown", (event) => {
@@ -117,6 +154,8 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
         filter();
       }
     });
+    container.classList.toggle("cpr-alt-skills-dense", this.#skillOptions.dense);
+    arrange();
     filter();
   }
 
@@ -166,7 +205,7 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
   _toggleDisabled(disabled) {
     super._toggleDisabled(disabled);
     if (disabled && !this.isEditable) {
-      const selector = ".cpr-alt-tabs button, .cpr-alt-skill-search input, .cpr-alt-inventory-tabs button";
+      const selector = ".cpr-alt-tabs button, .cpr-alt-skill-search input, .cpr-alt-skill-options input, .cpr-alt-inventory-tabs button";
       for (const control of this.element.querySelectorAll(selector)) {
         control.disabled = false;
       }

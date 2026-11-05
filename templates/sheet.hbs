@@ -1,13 +1,3 @@
-{{#*inline "cprAltPanelHeading"}}
-  <header class="cpr-alt-panel-heading">
-    <i class="fa-solid {{icon}}" aria-hidden="true"></i>
-    <div>
-      <h2>{{title}}</h2>
-      <p>{{description}}</p>
-    </div>
-  </header>
-{{/inline}}
-
 <div class="actor-sheet character cpr-alt-layout">
   <aside class="cpr-alt-essentials" aria-label="Informações essenciais"
          {{#if altCanSeeDetails}}style="--cpr-alt-hp: {{altHpPercent}}%"{{/if}}>
@@ -29,7 +19,6 @@
 
       <div class="right-content-section">
         <section class="tab lifepath-tab" data-group="primary" data-tab="lifepath" aria-label="História">
-          {{> cprAltPanelHeading title="História" icon="fa-book-open" description="Caminho da vida e notas do personagem"}}
           {{> "systems/cyberpunk-red-core/templates/actor/character/bottom-pane/cpr-lifepath-tab.hbs"}}
         </section>
 
@@ -41,6 +30,11 @@
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <input type="search" placeholder="Buscar perícia…" aria-label="Buscar perícia">
           </label>
+          <div class="cpr-alt-skill-options" role="group" aria-label="Opções da lista de perícias">
+            <label>Denso <input type="checkbox" role="switch" data-skill-option="dense"></label>
+            <label>Agrupar <input type="checkbox" role="switch" data-skill-option="grouped"></label>
+            <label>Esconder zeradas <input type="checkbox" role="switch" data-skill-option="hideZero"></label>
+          </div>
           <p class="cpr-alt-skill-empty" role="status" hidden>Nenhuma perícia encontrada.</p>
           {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-skills.hbs"}}
         </section>
@@ -58,17 +52,14 @@
         </section>
 
         <section class="tab cyberware-tab" data-group="primary" data-tab="cyberware" aria-label="Cibernética">
-          {{> cprAltPanelHeading title="Cibernética" icon="fa-microchip" description="Implantes instalados e opções disponíveis"}}
           {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-cyberware.hbs"}}
         </section>
 
         <section class="tab role-tab" data-group="primary" data-tab="role" aria-label="Funções">
-          {{> cprAltPanelHeading title="Funções" icon="fa-id-card" description="Habilidades de função e seus níveis"}}
           {{> "systems/cyberpunk-red-core/templates/actor/character/bottom-pane/cpr-role-tab.hbs"}}
         </section>
 
         <section class="tab fight-tab" data-group="primary" data-tab="fight" aria-label="Combate e Netrunning">
-          {{> cprAltPanelHeading title="Combate" icon="fa-crosshairs" description="Armas equipadas, proteção, lesões e ações de rede"}}
           {{#if (cprCompare fightData.fightOptions "===" "both")}}
             <div class="cpr-alt-combat-modes" aria-label="Modo de combate">
               {{#if (cprCompare fightData.fightState "===" "Netspace")}}
@@ -88,7 +79,6 @@
         </section>
 
         <section class="tab effects-tab" data-group="primary" data-tab="effects" aria-label="Efeitos">
-          {{> cprAltPanelHeading title="Efeitos" icon="fa-bolt" description="Condições e modificadores do personagem"}}
           {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-effects.hbs"}}
         </section>
       </div>
