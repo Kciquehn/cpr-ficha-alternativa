@@ -1,6 +1,6 @@
 # Cyberpunk RED — Ficha Alternativa
 
-Ficha opcional de personagem para Foundry VTT v13 e Cyberpunk RED v13 - PTBR 1.0.5. A versão 0.2.0 começa com quatro abas vazias: História, Atributos e Perícias, Equipamento e Habilidade de Cargo.
+Ficha opcional de personagem para Foundry VTT v13 e Cyberpunk RED v13 - PTBR 1.0.5. A ficha reserva a coluna esquerda para as informações essenciais e a direita para as categorias História, Atributos e Perícias, Equipamento e Habilidade de Cargo.
 
 ## Instalar ou atualizar pelo Foundry
 
@@ -20,7 +20,7 @@ Baixe o ZIP da versão e extraia o conteúdo em uma pasta chamada `cpr-ficha-alt
 
 ## Dados do personagem
 
-As duas fichas abrem o mesmo ator do Foundry. Esta versão só monta a navegação. Os próximos campos devem ler e editar os campos do próprio ator e seus itens pelo sistema, para que os valores apareçam nas duas fichas.
+As duas fichas abrem o mesmo ator do Foundry. Nesta versão, a coluna de informações essenciais e os painéis das categorias estão vazios. Os próximos campos devem ler e editar os campos do próprio ator e seus itens pelo sistema, para que os valores apareçam nas duas fichas.
 
 ## Onde fazer mudanças
 

@@ -1,20 +1,27 @@
 <div class="cpr-alt-layout">
-  <nav class="tabs cpr-alt-tabs" aria-label="Seções da ficha">
+  <aside class="cpr-alt-essentials" aria-label="Informações essenciais">
+    <h2>Informações essenciais</h2>
+  </aside>
+
+  <div class="cpr-alt-category">
+    <nav class="tabs cpr-alt-tabs" aria-label="Categorias da ficha">
+      {{#each tabs}}
+        <button type="button"
+                class="{{cssClass}}"
+                data-action="tab"
+                data-group="{{group}}"
+                data-tab="{{id}}"
+                aria-pressed="{{#if active}}true{{else}}false{{/if}}">
+          {{label}}
+        </button>
+      {{/each}}
+    </nav>
+
     {{#each tabs}}
-      <button type="button"
-              class="{{cssClass}}"
-              data-action="tab"
-              data-group="{{group}}"
-              data-tab="{{id}}"
-              aria-pressed="{{#if active}}true{{else}}false{{/if}}">
-        {{label}}
-      </button>
+      <section class="tab cpr-alt-panel {{cssClass}}"
+               data-group="{{group}}"
+               data-tab="{{id}}"
+               aria-label="{{label}}"></section>
     {{/each}}
-  </nav>
-  {{#each tabs}}
-    <section class="tab cpr-alt-panel {{cssClass}}"
-             data-group="{{group}}"
-             data-tab="{{id}}"
-             aria-label="{{label}}"></section>
-  {{/each}}
+  </div>
 </div>

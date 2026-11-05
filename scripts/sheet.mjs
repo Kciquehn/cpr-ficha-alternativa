@@ -4,7 +4,7 @@ const { ActorSheetV2 } = foundry.applications.sheets;
 class CPRFichaAlternativa extends HandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
-    position: { width: 720, height: 460 },
+    position: { width: 960, height: 620 },
     window: { resizable: true },
   };
 
