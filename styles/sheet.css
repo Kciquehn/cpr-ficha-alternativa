@@ -1,17 +1,19 @@
 .cpr-ficha-alternativa {
-  --alt-base: #141116;
-  --alt-rail: #19131b;
-  --alt-surface: #241b25;
-  --alt-raised: #30222e;
-  --alt-border: #513744;
-  --alt-text: #faedf1;
-  --alt-muted: #c9aeb9;
-  --alt-accent: #ff788b;
+  --alt-base: #090909;
+  --alt-rail: #0e0e0e;
+  --alt-surface: #161414;
+  --alt-raised: #211715;
+  --alt-border: #592d25;
+  --alt-text: #f5efed;
+  --alt-muted: #cbbdb9;
+  --alt-accent: #ff684f;
+  --alt-active: #e34c34;
+  --alt-rule: #a84231;
 }
 
 .cpr-ficha-alternativa > .window-header {
-  background: #22141e;
-  border-bottom: 1px solid var(--alt-border);
+  background: #100c0b;
+  border-bottom: 1px solid var(--alt-rule);
   color: var(--alt-text);
 }
 
@@ -27,7 +29,7 @@
   --cpr-background-header: var(--alt-raised);
   --cpr-background-row-odd: var(--alt-surface);
   --cpr-background-row-even: var(--alt-surface);
-  --cpr-background-pill: #412738;
+  --cpr-background-pill: #412018;
   --cpr-background-foundry-input: var(--alt-base);
   --cpr-background-cyberdeck-section-header: var(--alt-raised);
   --cpr-text-normal: var(--alt-text);
@@ -36,7 +38,7 @@
   --cpr-text-foundry-input: var(--alt-text);
   --cpr-text-icon-highlight: var(--alt-accent);
   --cpr-text-icon-normal: var(--alt-muted);
-  --cpr-text-icon-dimmed: #a18191;
+  --cpr-text-icon-dimmed: #a88c83;
   --cpr-text-pill: var(--alt-text);
   --cpr-text-placeholder: var(--alt-muted);
   color: var(--alt-text);
@@ -101,7 +103,7 @@
   clip-path: none;
   overflow: hidden;
   border-bottom: 2px solid var(--alt-accent);
-  background: radial-gradient(ellipse at 50% 80%, #502b42, #211722 70%);
+  background: radial-gradient(ellipse at 50% 80%, #461a12, #120c0a 70%);
 }
 
 .cpr-ficha-alternativa .actor-sheet .left-pane .profile-img {
@@ -256,7 +258,7 @@
   gap: 0.34rem;
   overflow-x: auto;
   padding: 0.55rem 0.7rem;
-  border-bottom: 1px solid var(--alt-border);
+  border-bottom: 1px solid var(--alt-rule);
   background: var(--alt-rail);
 }
 
@@ -279,8 +281,8 @@
 
 .cpr-ficha-alternativa .cpr-alt-tabs button.active {
   border-color: var(--alt-accent);
-  background: var(--alt-accent);
-  color: #25131a;
+  background: var(--alt-active);
+  color: #110805;
 }
 
 .cpr-ficha-alternativa .cpr-alt-tabs button:focus-visible {
@@ -316,7 +318,7 @@
   padding: 0.75rem;
   border: 1px solid var(--alt-border);
   border-radius: 0.45rem;
-  background: linear-gradient(110deg, #3a2334, var(--alt-surface) 70%);
+  background: linear-gradient(110deg, #321710, var(--alt-surface) 70%);
 }
 
 .cpr-ficha-alternativa .cpr-alt-panel-heading > i {
@@ -395,7 +397,7 @@
 
 .cpr-ficha-alternativa .right-content-section li.item:not(.items-header) {
   min-height: 1.55rem;
-  border-bottom: 1px solid #352630;
+  border-bottom: 1px solid #35211c;
 }
 
 .cpr-ficha-alternativa .right-content-section .items-list li.item:not(.items-header):hover {
