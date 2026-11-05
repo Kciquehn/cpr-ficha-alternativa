@@ -1,22 +1,33 @@
-import CPRCharacterActorSheet from "../../../systems/cyberpunk-red-core/modules/actor/sheet/cpr-character-sheet.js";
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+const { ActorSheetV2 } = foundry.applications.sheets;
 
-class CPRFichaAlternativa extends CPRCharacterActorSheet {
+class CPRFichaAlternativa extends HandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
-    position: { width: 1120 },
+    position: { width: 720, height: 460 },
+    window: { resizable: true },
   };
 
-  _onRender(context, options) {
-    super._onRender(context, options);
+  static PARTS = {
+    layout: { template: "modules/cpr-ficha-alternativa/templates/sheet.hbs" },
+  };
 
-    const healthPanel = this.element.querySelector(".actor-details-hp");
-    if (!healthPanel) return;
+  static TABS = {
+    sheet: {
+      initial: "lifepath",
+      tabs: [
+        { id: "lifepath", label: "História" },
+        { id: "stats", label: "Atributos e Perícias" },
+        { id: "gear", label: "Equipamento" },
+        { id: "ability", label: "Habilidade de Cargo" },
+      ],
+    },
+  };
 
-    const { value, max } = this.actor.system.derivedStats.hp;
-    const ratio = max > 0 ? value / max : 0;
-    const percent = Math.min(100, Math.max(0, ratio * 100));
-
-    healthPanel.style.setProperty("--cpr-alt-hp-percent", `${percent}%`);
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+    context.tabs = this._prepareTabs("sheet");
+    return context;
   }
 }
 
