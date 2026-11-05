@@ -2,7 +2,13 @@ import CPRCharacterActorSheet from "../../../systems/cyberpunk-red-core/modules/
 
 const CHARACTER_TEMPLATES = "systems/cyberpunk-red-core/templates/actor/character";
 
+function normalizeSkillSearch(text) {
+  return text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/\s+/g, " ");
+}
+
 class CPRFichaAlternativa extends CPRCharacterActorSheet {
+  #skillQuery = "";
+
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
     position: { width: 1100, height: 740 },
@@ -47,12 +53,61 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
     };
     sync();
     nav.addEventListener("click", sync);
+    this.#bindSkillSearch();
+  }
+
+  #bindSkillSearch() {
+    const search = this.element.querySelector(".cpr-alt-skill-search input");
+    if (!search) return;
+
+    const empty = this.element.querySelector(".cpr-alt-skill-empty");
+    const groups = this.element.querySelectorAll(".skills-container > .items-list > .collapsible");
+    search.value = this.#skillQuery;
+
+    const filter = () => {
+      this.#skillQuery = search.value;
+      const query = normalizeSkillSearch(search.value.trim());
+      let matches = 0;
+
+      for (const group of groups) {
+        let groupMatches = 0;
+        for (const row of group.querySelectorAll("li[data-skill-category]")) {
+          if (!query) {
+            delete row.dataset.cprAltSkillFilter;
+            continue;
+          }
+
+          const name = row.querySelector("a[data-roll-type='skill']")?.textContent ?? "";
+          const match = normalizeSkillSearch(name).includes(query);
+          row.dataset.cprAltSkillFilter = match ? "match" : "hide";
+          if (match) groupMatches += 1;
+        }
+
+        if (query && !groupMatches) group.dataset.cprAltSkillFilter = "hide";
+        else delete group.dataset.cprAltSkillFilter;
+        matches += groupMatches;
+      }
+
+      empty.hidden = !query || matches > 0;
+    };
+
+    search.addEventListener("input", filter);
+    search.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") event.preventDefault();
+      if (event.key === "Escape" && search.value) {
+        event.preventDefault();
+        event.stopPropagation();
+        search.value = "";
+        filter();
+      }
+    });
+    filter();
   }
 
   _toggleDisabled(disabled) {
     super._toggleDisabled(disabled);
     if (disabled && !this.isEditable) {
-      for (const button of this.element.querySelectorAll(".cpr-alt-tabs button")) {
+      for (const button of this.element.querySelectorAll(".cpr-alt-tabs button, .cpr-alt-skill-search input")) {
         button.disabled = false;
       }
     }

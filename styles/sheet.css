@@ -355,6 +355,48 @@
   background: transparent;
 }
 
+.cpr-ficha-alternativa .cpr-alt-skill-search {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.65rem;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--alt-border);
+  border-radius: 0.4rem;
+  background: var(--alt-surface);
+  color: var(--alt-accent);
+}
+
+.cpr-ficha-alternativa .cpr-alt-skill-search:focus-within {
+  border-color: var(--alt-accent);
+}
+
+.cpr-ficha-alternativa .cpr-alt-skill-search input {
+  width: 100%;
+  min-height: 2rem;
+  border: 0;
+  background: transparent;
+  color: var(--alt-text);
+}
+
+.cpr-ficha-alternativa .cpr-alt-skill-search input::placeholder {
+  color: var(--alt-muted);
+}
+
+.cpr-ficha-alternativa .cpr-alt-skill-empty {
+  margin: 0.85rem 0;
+  color: var(--alt-muted);
+  text-align: center;
+}
+
+.cpr-ficha-alternativa .skills-container [data-cpr-alt-skill-filter="hide"] {
+  display: none !important;
+}
+
+.cpr-ficha-alternativa .skills-container li.hide[data-cpr-alt-skill-filter="match"] {
+  display: flex !important;
+}
+
 .cpr-ficha-alternativa .skills-tab .skills-container {
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas: "skills-left" "skills-right";

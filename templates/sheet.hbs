@@ -37,6 +37,11 @@
           <section class="cpr-alt-attributes" aria-label="Atributos do personagem">
             {{> "systems/cyberpunk-red-core/templates/actor/character/left-pane/cpr-left-pane-stats.hbs"}}
           </section>
+          <label class="cpr-alt-skill-search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" placeholder="Buscar perícia…" aria-label="Buscar perícia">
+          </label>
+          <p class="cpr-alt-skill-empty" role="status" hidden>Nenhuma perícia encontrada.</p>
           {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-skills.hbs"}}
         </section>
 

@@ -3,7 +3,7 @@
 Ficha opcional de personagem para Foundry VTT v13 e Cyberpunk RED v13 - PTBR 1.0.5. A organização se inspira no [Cyberpunk RED Companion](https://cyberpunkred.com/) e usa os controles da ficha do sistema.
 
 - A coluna esquerda reúne retrato, identificação, PV, Humanidade, ferimentos, Salva de Morte, saldos e busca.
-- No topo à direita, **História** tem o Caminho da Vida e as notas. **Perícias** traz os atributos em uma faixa acima da lista. **Equipamento**, **Cibernética**, **Funções** e **Efeitos** reúnem os painéis do sistema.
+- No topo à direita, **História** tem o Caminho da Vida e as notas. **Perícias** traz os atributos e uma busca pelo nome acima da lista. **Equipamento**, **Cibernética**, **Funções** e **Efeitos** reúnem os painéis do sistema.
 - Em **Combate**, ficam as armas equipadas, armaduras e lesões críticas. Com um cyberdeck equipado, o seletor alterna entre combate físico e Netrunning, onde ficam os programas e as ações de rede.
 
 ## Instalar ou atualizar pelo Foundry
