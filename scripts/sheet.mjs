@@ -13,7 +13,8 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
       template: "modules/cpr-ficha-alternativa/templates/sheet.hbs",
       templates: [
         "modules/cpr-ficha-alternativa/templates/essentials.hbs",
-        `${CHARACTER_TEMPLATES}/cpr-left-pane.hbs`,
+        `${CHARACTER_TEMPLATES}/left-pane/cpr-left-pane-info.hbs`,
+        `${CHARACTER_TEMPLATES}/left-pane/cpr-left-pane-stats.hbs`,
         `${CHARACTER_TEMPLATES}/right-pane/cpr-skills.hbs`,
         `${CHARACTER_TEMPLATES}/right-pane/cpr-gear.hbs`,
         `${CHARACTER_TEMPLATES}/right-pane/cpr-cyberware.hbs`,

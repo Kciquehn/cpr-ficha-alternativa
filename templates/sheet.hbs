@@ -34,7 +34,9 @@
         </section>
 
         <section class="tab skills-tab" data-group="primary" data-tab="skills" aria-label="Perícias">
-          {{> cprAltPanelHeading title="Perícias" icon="fa-dice-d10" description="Rolagens, níveis, bases e favoritos"}}
+          <section class="cpr-alt-attributes" aria-label="Atributos do personagem">
+            {{> "systems/cyberpunk-red-core/templates/actor/character/left-pane/cpr-left-pane-stats.hbs"}}
+          </section>
           {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-skills.hbs"}}
         </section>
 

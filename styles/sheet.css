@@ -71,8 +71,8 @@
 .cpr-ficha-alternativa .actor-sheet .left-pane {
   grid-area: auto;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  grid-template-areas: "actor-details" "actor-stats";
+  grid-template-rows: auto;
+  grid-template-areas: "actor-details";
   gap: 0.6rem;
   height: auto;
 }
@@ -162,34 +162,71 @@
   color: var(--alt-accent);
 }
 
-.cpr-ficha-alternativa .actor-sheet .left-pane .actor-stats {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-auto-rows: minmax(2.65rem, auto);
-  gap: 0.25rem;
-  padding: 0;
-  background: transparent;
+.cpr-ficha-alternativa .cpr-alt-attributes {
+  margin-bottom: 0.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--alt-border);
+  border-radius: 0.45rem;
+  background: var(--alt-surface);
 }
 
-.cpr-ficha-alternativa .actor-sheet .left-pane .actor-stats-stat {
+.cpr-ficha-alternativa .cpr-alt-attributes .actor-stats {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(3.2rem, 1fr));
+}
+
+.cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-stat {
+  display: grid;
+  grid-template-rows: 3.45rem 2.45rem;
   min-width: 0;
-  border: 1px solid var(--alt-border);
-  border-radius: 0.35rem;
+  color: var(--alt-text);
+}
+
+.cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-stat:nth-child(even) {
   background: var(--alt-raised);
 }
 
-.cpr-ficha-alternativa .actor-sheet .left-pane .actor-stats-stat * {
-  background: transparent;
-}
-
-.cpr-ficha-alternativa .actor-sheet .left-pane .actor-stats-title {
+.cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-title {
+  display: grid;
+  place-items: stretch;
+  border-bottom: 1px solid var(--alt-border);
   color: var(--alt-accent);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
 }
 
-@container (max-width: 14rem) {
-  .cpr-ficha-alternativa .actor-sheet .left-pane .actor-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-title a {
+  display: grid;
+  place-items: center;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.06em;
+}
+
+.cpr-ficha-alternativa .cpr-alt-attributes :is(.actor-stats-value, .actor-stats-of) {
+  display: grid;
+  align-items: center;
+  padding-inline: 0.18rem;
+}
+
+.cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-of {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: 0.1rem;
+  font-size: 0.8rem;
+}
+
+.cpr-ficha-alternativa .cpr-alt-attributes input {
+  min-width: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--alt-text);
+  font-weight: 750;
+  text-align: center;
+}
+
+.cpr-ficha-alternativa .cpr-alt-attributes input:focus-visible {
+  outline: 1px solid var(--alt-accent);
+  outline-offset: -2px;
 }
 
 .cpr-ficha-alternativa .cpr-alt-limited {
