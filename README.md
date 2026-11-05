@@ -20,10 +20,10 @@ Baixe o ZIP da versão e extraia o conteúdo em uma pasta chamada `cpr-ficha-alt
 
 ## Dados do personagem
 
-As duas fichas abrem o mesmo ator do Foundry. Nesta versão, a coluna de informações essenciais e os painéis das categorias estão vazios. Os próximos campos devem ler e editar os campos do próprio ator e seus itens pelo sistema, para que os valores apareçam nas duas fichas.
+As duas fichas abrem o mesmo ator do Foundry. A coluna esquerda mostra os atributos, PV, Humanidade, ferimentos, Salva de Morte, pontos de aprimoramento, reputação e dinheiro do mesmo personagem. Quem pode editar o ator pode trocar o retrato, o nome, a função e os valores atuais de PV, Humanidade e atributos. Os painéis das categorias estão vazios.
 
 ## Onde fazer mudanças
 
 - `scripts/sheet.mjs` registra a ficha e define a ordem e o nome das abas.
-- `templates/sheet.hbs` desenha a navegação e os painéis.
+- `templates/sheet.hbs` desenha a navegação e os painéis. A coluna esquerda está em `templates/essentials.hbs`.
 - `styles/sheet.css` define o visual.

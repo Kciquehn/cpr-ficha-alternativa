@@ -1,0 +1,92 @@
+{{#*inline "cprAltCurrentValue"}}
+  {{#if editable}}
+    <input type="number" name="{{field}}" value="{{value}}" required aria-label="{{label}}">
+  {{else}}
+    <strong>{{value}}</strong>
+  {{/if}}
+  {{#if hasMax}}
+    <span class="cpr-alt-maximum" aria-label="Máximo {{max}}">/ {{max}}</span>
+  {{/if}}
+{{/inline}}
+
+<div class="cpr-alt-identity">
+  <img class="cpr-alt-portrait" src="{{actor.img}}" alt="Retrato de {{actor.name}}"
+       {{#if editable}}data-action="editImage" data-edit="img" title="Alterar retrato"{{/if}}>
+  <div class="cpr-alt-identity-fields">
+    {{#if editable}}
+      <input class="cpr-alt-name" type="text" name="name" value="{{actor.name}}"
+             required aria-label="Nome do personagem">
+      <input type="text" name="system.roleInfo.activeRole" value="{{system.roleInfo.activeRole}}"
+             placeholder="Função" aria-label="Função do personagem">
+    {{else}}
+      <strong class="cpr-alt-name">{{actor.name}}</strong>
+      {{#if canSeeDetails}}<span>{{system.roleInfo.activeRole}}</span>{{/if}}
+    {{/if}}
+  </div>
+</div>
+
+{{#if canSeeDetails}}
+  <section class="cpr-alt-vitals" aria-label="Condição do personagem">
+    <div class="cpr-alt-card cpr-alt-health">
+      <span class="cpr-alt-label">{{localize "CPR.global.generic.hitpointsShort"}}</span>
+      <div class="cpr-alt-current">
+        {{> cprAltCurrentValue editable=editable field="system.derivedStats.hp.value"
+            value=system.derivedStats.hp.value hasMax=true max=system.derivedStats.hp.max
+            label="Pontos de vida atuais"}}
+      </div>
+      <progress max="{{system.derivedStats.hp.max}}" value="{{system.derivedStats.hp.value}}"
+                aria-label="Pontos de vida"></progress>
+    </div>
+
+    <div class="cpr-alt-card">
+      <span class="cpr-alt-label">{{localize "CPR.characterSheet.leftPane.humanity"}}</span>
+      <div class="cpr-alt-current">
+        {{> cprAltCurrentValue editable=editable field="system.derivedStats.humanity.value"
+            value=system.derivedStats.humanity.value hasMax=true max=system.derivedStats.humanity.max
+            label="Humanidade atual"}}
+      </div>
+    </div>
+
+    <div class="cpr-alt-card">
+      <span class="cpr-alt-label">{{localize "CPR.characterSheet.leftPane.woundState"}}</span>
+      <strong class="cpr-alt-wounds" data-state="{{system.derivedStats.currentWoundState}}">
+        {{woundState}}
+      </strong>
+    </div>
+
+    <div class="cpr-alt-card">
+      <span class="cpr-alt-label">{{localize "CPR.characterSheet.leftPane.deathSave.title"}}</span>
+      <strong>{{system.derivedStats.deathSave.value}}</strong>
+    </div>
+  </section>
+
+  <section aria-label="Atributos">
+    <h2>Atributos</h2>
+    <div class="cpr-alt-stats">
+      {{#each stats}}
+        <div class="cpr-alt-card cpr-alt-stat">
+          <span class="cpr-alt-label">{{label}}</span>
+          <div class="cpr-alt-current">
+            {{> cprAltCurrentValue editable=../editable field=field value=value
+                hasMax=hasMax max=max label=label}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+
+  <dl class="cpr-alt-tracking">
+    <div>
+      <dt>{{localize "CPR.characterSheet.leftPane.improvementPoints"}}</dt>
+      <dd>{{improvementPoints}}</dd>
+    </div>
+    <div>
+      <dt>{{localize "CPR.characterSheet.bottomPane.reputation"}}</dt>
+      <dd>{{system.reputation.value}}</dd>
+    </div>
+    <div>
+      <dt>{{localize "CPR.characterSheet.rightPane.eurobucks.eurobucks"}}</dt>
+      <dd>{{wealth}} eb</dd>
+    </div>
+  </dl>
+{{/if}}
