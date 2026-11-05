@@ -1,60 +1,51 @@
-const { HandlebarsApplicationMixin } = foundry.applications.api;
-const { ActorSheetV2 } = foundry.applications.sheets;
-const ESSENTIALS_TEMPLATE = "modules/cpr-ficha-alternativa/templates/essentials.hbs";
+import CPRCharacterActorSheet from "../../../systems/cyberpunk-red-core/modules/actor/sheet/cpr-character-sheet.js";
 
-class CPRFichaAlternativa extends HandlebarsApplicationMixin(ActorSheetV2) {
+const CHARACTER_TEMPLATES = "systems/cyberpunk-red-core/templates/actor/character";
+
+class CPRFichaAlternativa extends CPRCharacterActorSheet {
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
-    position: { width: 960, height: 620 },
-    window: { resizable: true },
-    form: { submitOnChange: true },
+    position: { width: 1100, height: 740 },
   };
 
   static PARTS = {
-    layout: {
+    form: {
       template: "modules/cpr-ficha-alternativa/templates/sheet.hbs",
-      templates: [ESSENTIALS_TEMPLATE],
-      scrollable: [".cpr-alt-essentials"],
-    },
-  };
-
-  static TABS = {
-    sheet: {
-      initial: "lifepath",
-      tabs: [
-        { id: "lifepath", label: "História" },
-        { id: "stats", label: "Atributos e Perícias" },
-        { id: "gear", label: "Equipamento" },
-        { id: "ability", label: "Habilidade de Cargo" },
+      templates: [
+        "modules/cpr-ficha-alternativa/templates/essentials.hbs",
+        `${CHARACTER_TEMPLATES}/cpr-left-pane.hbs`,
+        `${CHARACTER_TEMPLATES}/right-pane/cpr-skills.hbs`,
+        `${CHARACTER_TEMPLATES}/right-pane/cpr-gear.hbs`,
+        `${CHARACTER_TEMPLATES}/right-pane/cpr-cyberware.hbs`,
+        `${CHARACTER_TEMPLATES}/right-pane/cpr-effects.hbs`,
+        `${CHARACTER_TEMPLATES}/bottom-pane/cpr-role-tab.hbs`,
+        `${CHARACTER_TEMPLATES}/bottom-pane/cpr-fight-tab.hbs`,
+        `${CHARACTER_TEMPLATES}/bottom-pane/cpr-lifepath-tab.hbs`,
       ],
+      scrollable: [".cpr-alt-essentials", ".right-content-section"],
     },
   };
 
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
-    const actor = this.actor;
-    const { system } = actor;
-    const canSeeDetails = actor.testUserPermission(game.user, "OBSERVER");
-    Object.assign(context, { actor, system, canSeeDetails });
-    context.tabs = this._prepareTabs("sheet");
-
-    if (canSeeDetails) {
-      const { i18n } = game;
-      const format = new Intl.NumberFormat(i18n.lang);
-      context.stats = Object.entries(system.stats).map(([id, stat]) => ({
-        label: i18n.localize(`CPR.global.stats.${id}`),
-        field: `system.stats.${id}.value`,
-        value: stat.value,
-        max: stat.max,
-        hasMax: typeof stat.max === "number",
-      }));
-      const woundState = system.derivedStats.currentWoundState;
-      context.woundState = woundState ? i18n.localize(`CPR.global.woundState.${woundState}`) : "—";
-      context.improvementPoints = format.format(system.improvementPoints.value);
-      context.wealth = format.format(system.wealth.value);
-    }
-
+    context.altCanSeeDetails = this.actor.testUserPermission(game.user, "OBSERVER");
+    const { hp } = this.actor.system.derivedStats;
+    context.altHpPercent = hp.max > 0 ? Math.max(0, Math.min(100, 100 * hp.value / hp.max)) : 0;
     return context;
+  }
+
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const nav = this.element.querySelector(".cpr-alt-tabs");
+    if (!nav) return;
+
+    const sync = () => {
+      for (const button of nav.querySelectorAll("button")) {
+        button.ariaPressed = String(button.classList.contains("active"));
+      }
+    };
+    sync();
+    nav.addEventListener("click", sync);
   }
 
   _toggleDisabled(disabled) {
@@ -66,20 +57,18 @@ class CPRFichaAlternativa extends HandlebarsApplicationMixin(ActorSheetV2) {
     }
   }
 
-  _onChangeForm(formConfig, event) {
-    if (event.target instanceof HTMLInputElement && !event.target.reportValidity()) return;
-    return super._onChangeForm(formConfig, event);
-  }
-
   _processFormData(event, _form, formData) {
     const data = formData.object;
-    // A edição de imagem do Foundry dispara submit. Os outros campos salvam no change.
+    // O seletor nativo de retrato dispara submit. Os campos do ator usam change.
     if (event?.type !== "change") {
       return data.img && data.img !== this.actor.img ? { img: data.img } : {};
     }
 
     const field = event.target.name;
-    if (!Object.hasOwn(data, field)) return {};
+    // Quantidades e outros controles de itens são tratados pelos eventos da ficha oficial.
+    if (!field || !Object.hasOwn(data, field) || (field !== "name" && !field.startsWith("system."))) {
+      return {};
+    }
     return foundry.utils.expandObject({ [field]: data[field] });
   }
 }

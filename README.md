@@ -1,6 +1,10 @@
 # Cyberpunk RED — Ficha Alternativa
 
-Ficha opcional de personagem para Foundry VTT v13 e Cyberpunk RED v13 - PTBR 1.0.5. A ficha reserva a coluna esquerda para as informações essenciais e a direita para as categorias História, Atributos e Perícias, Equipamento e Habilidade de Cargo.
+Ficha opcional de personagem para Foundry VTT v13 e Cyberpunk RED v13 - PTBR 1.0.5. A organização se inspira no [Cyberpunk RED Companion](https://cyberpunkred.com/) e usa os controles da ficha do sistema.
+
+- A coluna esquerda reúne retrato, identificação, atributos, PV, Humanidade, ferimentos, Salva de Morte, saldos e busca.
+- No topo à direita, **História** tem o Caminho da Vida e as notas. **Perícias**, **Equipamento**, **Cibernética**, **Funções** e **Efeitos** reúnem os painéis do sistema.
+- Em **Combate**, ficam as armas equipadas, armaduras e lesões críticas. Com um cyberdeck equipado, o seletor alterna entre combate físico e Netrunning, onde ficam os programas e as ações de rede.
 
 ## Instalar ou atualizar pelo Foundry
 
@@ -20,10 +24,10 @@ Baixe o ZIP da versão e extraia o conteúdo em uma pasta chamada `cpr-ficha-alt
 
 ## Dados do personagem
 
-As duas fichas abrem o mesmo ator do Foundry. A coluna esquerda mostra os atributos, PV, Humanidade, ferimentos, Salva de Morte, pontos de aprimoramento, reputação e dinheiro do mesmo personagem. Quem pode editar o ator pode trocar o retrato, o nome, a função e os valores atuais de PV, Humanidade e atributos. Os painéis das categorias estão vazios.
+As duas fichas abrem o mesmo ator. Os cálculos, as rolagens, os itens e os efeitos são processados pelo sistema Cyberpunk RED. A edição segue as permissões do personagem no Foundry.
 
 ## Onde fazer mudanças
 
-- `scripts/sheet.mjs` registra a ficha e define a ordem e o nome das abas.
-- `templates/sheet.hbs` desenha a navegação e os painéis. A coluna esquerda está em `templates/essentials.hbs`.
+- `scripts/sheet.mjs` registra a ficha e herda os controles da ficha do sistema.
+- `templates/sheet.hbs` organiza os painéis nativos em abas. A coluna esquerda está em `templates/essentials.hbs`.
 - `styles/sheet.css` define o visual.

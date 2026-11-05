@@ -1,27 +1,65 @@
-<div class="cpr-alt-layout">
-  <aside class="cpr-alt-essentials" aria-label="Informações essenciais">
+<div class="actor-sheet character cpr-alt-layout">
+  <aside class="cpr-alt-essentials" aria-label="Informações essenciais"
+         {{#if altCanSeeDetails}}style="--cpr-alt-hp: {{altHpPercent}}%"{{/if}}>
     {{> "modules/cpr-ficha-alternativa/templates/essentials.hbs"}}
   </aside>
 
-  <div class="cpr-alt-category">
-    <nav class="tabs cpr-alt-tabs" aria-label="Categorias da ficha">
-      {{#each tabs}}
-        <button type="button"
-                class="{{cssClass}}"
-                data-action="tab"
-                data-group="{{group}}"
-                data-tab="{{id}}"
-                aria-pressed="{{#if active}}true{{else}}false{{/if}}">
-          {{label}}
-        </button>
-      {{/each}}
-    </nav>
+  {{#if altCanSeeDetails}}
+    <div class="cpr-alt-category">
+      <nav class="navtabs-right cpr-alt-tabs" data-group="primary" aria-label="Categorias da ficha">
+        <button type="button" data-tab="lifepath">História</button>
+        <button type="button" data-tab="skills">Perícias</button>
+        <button type="button" data-tab="gear">Equipamento</button>
+        <button type="button" data-tab="cyberware">Cibernética</button>
+        <button type="button" data-tab="role">Funções</button>
+        <button type="button" data-tab="fight">Combate</button>
+        <button type="button" data-tab="effects">Efeitos</button>
+      </nav>
 
-    {{#each tabs}}
-      <section class="tab cpr-alt-panel {{cssClass}}"
-               data-group="{{group}}"
-               data-tab="{{id}}"
-               aria-label="{{label}}"></section>
-    {{/each}}
-  </div>
+      <div class="right-content-section">
+        <section class="tab lifepath-tab" data-group="primary" data-tab="lifepath" aria-label="História">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/bottom-pane/cpr-lifepath-tab.hbs"}}
+        </section>
+
+        <section class="tab skills-tab" data-group="primary" data-tab="skills" aria-label="Perícias">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-skills.hbs"}}
+        </section>
+
+        <section class="tab gear-tab" data-group="primary" data-tab="gear" aria-label="Equipamento">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-gear.hbs"}}
+        </section>
+
+        <section class="tab cyberware-tab" data-group="primary" data-tab="cyberware" aria-label="Cibernética">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-cyberware.hbs"}}
+        </section>
+
+        <section class="tab role-tab" data-group="primary" data-tab="role" aria-label="Funções">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/bottom-pane/cpr-role-tab.hbs"}}
+        </section>
+
+        <section class="tab fight-tab" data-group="primary" data-tab="fight" aria-label="Combate e Netrunning">
+          {{#if (cprCompare fightData.fightOptions "===" "both")}}
+            <div class="cpr-alt-combat-modes" aria-label="Modo de combate">
+              {{#if (cprCompare fightData.fightState "===" "Netspace")}}
+                {{#if editable}}
+                  <button type="button" class="toggle-fight-state" data-state="Meatspace">Combate físico</button>
+                {{/if}}
+                <span class="cpr-alt-mode-current">Netrunning</span>
+              {{else}}
+                <span class="cpr-alt-mode-current">Combate físico</span>
+                {{#if editable}}
+                  <button type="button" class="toggle-fight-state" data-state="Netspace">Netrunning</button>
+                {{/if}}
+              {{/if}}
+            </div>
+          {{/if}}
+          {{> "systems/cyberpunk-red-core/templates/actor/character/bottom-pane/cpr-fight-tab.hbs"}}
+        </section>
+
+        <section class="tab effects-tab" data-group="primary" data-tab="effects" aria-label="Efeitos">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-effects.hbs"}}
+        </section>
+      </div>
+    </div>
+  {{/if}}
 </div>
