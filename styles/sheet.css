@@ -397,6 +397,64 @@
   display: flex !important;
 }
 
+.cpr-ficha-alternativa .cpr-alt-inventory-tabs {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.75rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--alt-rule);
+  background: var(--alt-base);
+}
+
+.cpr-ficha-alternativa .cpr-alt-inventory-tabs button {
+  position: relative;
+  flex: 1 0 auto;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.65rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--alt-muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cpr-ficha-alternativa .cpr-alt-inventory-tabs button:is(:hover, .active) {
+  color: var(--alt-accent);
+}
+
+.cpr-ficha-alternativa .cpr-alt-inventory-tabs button.active::after {
+  content: "";
+  position: absolute;
+  inset: auto 0.3rem 0;
+  height: 0.25rem;
+  background: var(--alt-active);
+  clip-path: polygon(0.3rem 0, calc(100% - 0.3rem) 0, 100% 100%, 0 100%);
+}
+
+.cpr-ficha-alternativa .cpr-alt-inventory-tabs button:focus-visible {
+  outline: 1px solid var(--alt-accent);
+  outline-offset: -2px;
+}
+
+.cpr-ficha-alternativa .cpr-alt-inventory-empty {
+  margin: 1.2rem auto;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--alt-border);
+  border-radius: 0.35rem;
+  color: var(--alt-muted);
+  text-align: center;
+}
+
+.cpr-ficha-alternativa .gear-tab :is(.cpr-alt-inventory-empty, .gear-tab-data > .items-list > .collapsible)[hidden] {
+  display: none !important;
+}
+
 .cpr-ficha-alternativa .skills-tab .skills-container {
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas: "skills-left" "skills-right";

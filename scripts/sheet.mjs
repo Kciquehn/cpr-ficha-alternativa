@@ -2,12 +2,24 @@ import CPRCharacterActorSheet from "../../../systems/cyberpunk-red-core/modules/
 
 const CHARACTER_TEMPLATES = "systems/cyberpunk-red-core/templates/actor/character";
 
+const INVENTORY_CATEGORIES = [
+  { id: "ammo", label: "Munição", types: ["ammo"] },
+  { id: "armor", label: "Armaduras", types: ["armor"] },
+  { id: "clothing", label: "Roupas", types: ["clothing"] },
+  { id: "cyberware", label: "Cibernética", types: ["cyberware"] },
+  { id: "gear", label: "Equipamentos", types: ["gear", "drug", "itemUpgrade", "cyberdeck", "netarch"] },
+  { id: "program", label: "Programas", types: ["program"] },
+  { id: "vehicle", label: "Veículos", types: ["vehicle"] },
+  { id: "weapon", label: "Armas", types: ["weapon"] },
+];
+
 function normalizeSkillSearch(text) {
   return text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/\s+/g, " ");
 }
 
 class CPRFichaAlternativa extends CPRCharacterActorSheet {
   #skillQuery = "";
+  #inventoryCategory = "ammo";
 
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
@@ -38,6 +50,9 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
     context.altCanSeeDetails = this.actor.testUserPermission(game.user, "OBSERVER");
     const { hp } = this.actor.system.derivedStats;
     context.altHpPercent = hp.max > 0 ? Math.max(0, Math.min(100, 100 * hp.value / hp.max)) : 0;
+    const { cyberdeck, program } = this.actor.itemTypes;
+    const showPrograms = cyberdeck?.length || program?.length;
+    context.altInventoryCategories = INVENTORY_CATEGORIES.filter(({ id }) => id !== "program" || showPrograms);
     return context;
   }
 
@@ -54,6 +69,7 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
     sync();
     nav.addEventListener("click", sync);
     this.#bindSkillSearch();
+    this.#bindInventoryCategories(context.altInventoryCategories);
   }
 
   #bindSkillSearch() {
@@ -104,11 +120,55 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
     filter();
   }
 
+  #bindInventoryCategories(categories) {
+    const nav = this.element.querySelector(".cpr-alt-inventory-tabs");
+    if (!nav) return;
+
+    const buttons = Array.from(nav.querySelectorAll("button[data-inventory-category]"));
+    const groups = this.element.querySelectorAll(".gear-tab-data > .items-list > .collapsible");
+    const empty = this.element.querySelector(".cpr-alt-inventory-empty");
+    const categoryByType = new Map(categories.flatMap(({ id, types }) => types.map(type => [type, id])));
+    const groupData = Array.from(groups, group => {
+      const type = group.querySelector("[id^='gearTab-']")?.id.slice("gearTab-".length);
+      return {
+        group,
+        category: categoryByType.get(type) ?? "gear",
+        hasItems: Boolean(group.querySelector("[data-item-id]")),
+        canCreate: this.isEditable && Boolean(group.querySelector(".item-create")),
+      };
+    });
+
+    const select = (category) => {
+      this.#inventoryCategory = category;
+      for (const button of buttons) {
+        const active = button.dataset.inventoryCategory === category;
+        button.classList.toggle("active", active);
+        button.ariaPressed = String(active);
+      }
+
+      let hasItems = false;
+      for (const entry of groupData) {
+        const selected = entry.category === category;
+        entry.group.hidden = !selected || (!entry.hasItems && !entry.canCreate);
+        if (selected && entry.hasItems) hasItems = true;
+      }
+      empty.hidden = hasItems;
+    };
+
+    select(buttons.some(button => button.dataset.inventoryCategory === this.#inventoryCategory)
+      ? this.#inventoryCategory
+      : buttons[0].dataset.inventoryCategory);
+    for (const button of buttons) {
+      button.addEventListener("click", () => select(button.dataset.inventoryCategory));
+    }
+  }
+
   _toggleDisabled(disabled) {
     super._toggleDisabled(disabled);
     if (disabled && !this.isEditable) {
-      for (const button of this.element.querySelectorAll(".cpr-alt-tabs button, .cpr-alt-skill-search input")) {
-        button.disabled = false;
+      const selector = ".cpr-alt-tabs button, .cpr-alt-skill-search input, .cpr-alt-inventory-tabs button";
+      for (const control of this.element.querySelectorAll(selector)) {
+        control.disabled = false;
       }
     }
   }

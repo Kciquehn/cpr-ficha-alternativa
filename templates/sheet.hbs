@@ -46,7 +46,14 @@
         </section>
 
         <section class="tab gear-tab" data-group="primary" data-tab="gear" aria-label="Equipamento">
-          {{> cprAltPanelHeading title="Equipamento" icon="fa-briefcase" description="Armas, munição, armaduras e demais itens"}}
+          <nav class="cpr-alt-inventory-tabs" aria-label="Categorias de equipamento">
+            {{#each altInventoryCategories}}
+              <button type="button" data-inventory-category="{{id}}" aria-pressed="false">
+                {{label}}
+              </button>
+            {{/each}}
+          </nav>
+          <p class="cpr-alt-inventory-empty" role="status" hidden>Nenhum item para mostrar nesta categoria.</p>
           {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/cpr-gear.hbs"}}
         </section>
 
