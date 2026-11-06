@@ -1,4 +1,5 @@
-.cpr-ficha-alternativa {
+.cpr-ficha-alternativa,
+.application:has(> .window-content :is(.mook-sheet, .mook-sheet-limited, .container-sheet, .blackice-sheet, .demon-sheet)) {
   --alt-base: #050505;
   --alt-rail: #0a0a0a;
   --alt-surface: #100e0e;
@@ -9,6 +10,73 @@
   --alt-accent: #ff5138;
   --alt-active: #ef482d;
   --alt-rule: #cf3723;
+}
+
+/* Color overrides for the native NPC and utility actor sheets. */
+.application:has(> .window-content :is(.mook-sheet, .mook-sheet-limited, .container-sheet, .blackice-sheet, .demon-sheet)) {
+  color-scheme: dark;
+  --cpr-color-scheme: dark;
+  --cpr-background-window: var(--alt-base);
+  --cpr-background-border: var(--alt-border);
+  --cpr-background-box: var(--alt-surface);
+  --cpr-background-header: var(--alt-raised);
+  --cpr-background-row-odd: var(--alt-surface);
+  --cpr-background-row-even: var(--alt-raised);
+  --cpr-background-pill: #412018;
+  --cpr-background-tab-active: var(--alt-active);
+  --cpr-background-tab-inactive: var(--alt-surface);
+  --cpr-background-tab-underlay: var(--alt-border);
+  --cpr-background-toggle-checked: var(--alt-active);
+  --cpr-background-toggle-unchecked: var(--alt-border);
+  --cpr-background-foundry-input: var(--alt-base);
+  --cpr-background-foundry-button: var(--alt-raised);
+  --cpr-background-foundry-hover: #412018;
+  --cpr-background-cyberdeck-section-header: var(--alt-raised);
+  --cpr-background-editor-header: var(--alt-surface);
+  --cpr-background-editor-button: #412018;
+  --cpr-background-editor-button-active: var(--alt-border);
+  --cpr-background-editor-button-hover: var(--alt-border);
+  --cpr-background-editor-button-selected: var(--alt-border);
+  --cpr-text-normal: var(--alt-text);
+  --cpr-text-header: var(--alt-text);
+  --cpr-text-window: var(--alt-text);
+  --cpr-text-mook-normal: var(--alt-text);
+  --cpr-text-mook-header: var(--alt-text);
+  --cpr-text-mook-name: var(--alt-text);
+  --cpr-text-input: var(--alt-text);
+  --cpr-text-foundry-input: var(--alt-text);
+  --cpr-text-foundry-hover: var(--alt-text);
+  --cpr-text-foundry-hint: var(--alt-muted);
+  --cpr-text-hint: var(--alt-muted);
+  --cpr-text-placeholder: var(--alt-muted);
+  --cpr-text-tab-normal: var(--alt-text);
+  --cpr-text-tab-highlight: var(--alt-accent);
+  --cpr-text-pill: var(--alt-text);
+  --cpr-text-editor-button: var(--alt-text);
+  --cpr-text-editor-header: var(--alt-text);
+  --cpr-text-header-arrow: var(--alt-accent);
+  --cpr-text-header-line: var(--alt-rule);
+  --cpr-text-header-line-box: var(--alt-muted);
+  --cpr-text-icon-highlight: var(--alt-accent);
+  --cpr-text-icon-normal: var(--alt-muted);
+  --cpr-text-icon-dimmed: #a88c83;
+  --cpr-icon-actor-image-overlay-border: var(--alt-rule);
+  --color-border-light-1: var(--alt-border);
+  --color-border-light-primary: var(--alt-border);
+  --color-shadow-primary: var(--alt-accent);
+  background: var(--alt-base);
+  color: var(--alt-text);
+
+  > .window-header {
+    background: #100c0b;
+    border-bottom-color: var(--alt-rule);
+    color: var(--alt-text);
+  }
+
+  > .window-content {
+    background: var(--alt-base);
+    color: var(--alt-text);
+  }
 }
 
 .cpr-ficha-alternativa > .window-header {
