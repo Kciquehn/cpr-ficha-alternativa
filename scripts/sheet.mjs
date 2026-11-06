@@ -8,7 +8,7 @@ const CYBER_ARROW_TARGETS = {
   cyberEye: [695, 126],
   cyberArm: [442, 379],
   cyberLeg: [547, 1341],
-  neuralWare: [665, 68],
+  neuralWare: [643, 278],
   cyberwareInternal: [644, 530],
 };
 
@@ -151,8 +151,6 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
         if (region === "cyberAudioSuite") {
           const audioX = box.left - frame.left + box.width * 0.26;
           points = [[audioX, box.bottom - frame.top], [audioX, tipY], [tipX, tipY]];
-        } else if (region === "neuralWare") {
-          points = [[tipX, box.top - frame.top], [tipX, tipY]];
         }
         const [beforeX, beforeY] = points.at(-2);
         const angle = Math.atan2(tipY - beforeY, tipX - beforeX) * 180 / Math.PI;

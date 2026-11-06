@@ -706,11 +706,11 @@
   grid-template-columns: minmax(0, 1fr) minmax(4rem, min(49%, 20rem)) minmax(0, 1fr);
   grid-template-areas:
     ". audio ."
-    ". . eye"
+    "neural . eye"
     "arm . external"
     "internal . borg"
-    ". neural fashion"
-    "leg . .";
+    "leg . fashion"
+    ". . .";
   align-items: center;
   gap: 0.45rem;
   padding: 0.6rem;
