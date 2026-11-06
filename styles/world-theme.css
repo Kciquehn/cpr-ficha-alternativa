@@ -1,0 +1,160 @@
+/* Theme tokens for the Cyberpunk RED world. */
+html.cpr-alt-world-theme[data-cpr-theme],
+html.cpr-alt-world-theme {
+  --cpr-color-scheme: dark;
+  --cpr-background-window: var(--alt-base);
+  --cpr-background-border: var(--alt-border);
+  --cpr-background-box: var(--alt-surface);
+  --cpr-background-header: var(--alt-raised);
+  --cpr-background-row-odd: var(--alt-surface);
+  --cpr-background-row-even: var(--alt-raised);
+  --cpr-background-pill: #412018;
+  --cpr-background-tab-active: var(--alt-active);
+  --cpr-background-tab-inactive: var(--alt-surface);
+  --cpr-background-tab-underlay: var(--alt-border);
+  --cpr-background-toggle-checked: var(--alt-active);
+  --cpr-background-toggle-unchecked: var(--alt-border);
+  --cpr-background-foundry-input: var(--alt-base);
+  --cpr-background-foundry-button: var(--alt-raised);
+  --cpr-background-foundry-hover: #412018;
+  --cpr-background-cyberdeck-section-header: var(--alt-raised);
+  --cpr-background-editor-header: var(--alt-surface);
+  --cpr-background-editor-button: #412018;
+  --cpr-background-editor-button-active: var(--alt-border);
+  --cpr-background-editor-button-hover: var(--alt-border);
+  --cpr-background-editor-button-selected: var(--alt-border);
+  --cpr-background-chat-border: var(--alt-border);
+  --cpr-background-chat-card-block-before: #412018;
+  --cpr-background-chat-card-block: var(--alt-raised);
+  --cpr-background-chat-card: var(--alt-surface);
+  --cpr-background-chat: var(--alt-base);
+  --cpr-background-chat-inline-roll: #412018;
+  --cpr-background-dialog-border: var(--alt-border);
+  --cpr-background-dialog-selected: #412018;
+  --cpr-background-dialog-hr-gradient-start: var(--alt-base);
+  --cpr-background-dialog-hr-gradient-middle: var(--alt-rule);
+  --cpr-background-dialog-hr-gradient-end: var(--alt-base);
+  --cpr-background-content-link: var(--alt-raised);
+  --cpr-background-code: var(--alt-raised);
+  --cpr-background-journal-blockquote: var(--alt-raised);
+  --cpr-background-journal-info: #412018;
+  --cpr-background-progress-border: var(--alt-border);
+  --cpr-background-progress: var(--alt-active);
+  --cpr-background-progress-label: var(--alt-text);
+  --cpr-pause-highlight1: var(--alt-accent);
+  --cpr-pause-highlight2: var(--alt-rule);
+  --cpr-text-normal: var(--alt-text);
+  --cpr-text-header: var(--alt-text);
+  --cpr-text-window: var(--alt-text);
+  --cpr-text-chat-normal: var(--alt-text);
+  --cpr-text-dir-list: var(--alt-text);
+  --cpr-dark-background: var(--alt-surface);
+  --cpr-dark-header: var(--alt-base);
+  --cpr-dark-main: var(--alt-border);
+  --cpr-dark-bluish-grey: #412018;
+  --cpr-dark-text-main: var(--alt-text);
+  --cpr-text-mook-normal: var(--alt-text);
+  --cpr-text-mook-header: var(--alt-text);
+  --cpr-text-mook-name: var(--alt-text);
+  --cpr-text-input: var(--alt-text);
+  --cpr-text-foundry-input: var(--alt-text);
+  --cpr-text-foundry-hover: var(--alt-text);
+  --cpr-text-foundry-hint: var(--alt-muted);
+  --cpr-text-hint: var(--alt-muted);
+  --cpr-text-placeholder: var(--alt-muted);
+  --cpr-text-tab-normal: var(--alt-text);
+  --cpr-text-tab-highlight: var(--alt-accent);
+  --cpr-text-pill: var(--alt-text);
+  --cpr-text-editor-button: var(--alt-text);
+  --cpr-text-editor-header: var(--alt-text);
+  --cpr-text-header-arrow: var(--alt-accent);
+  --cpr-text-header-line: var(--alt-rule);
+  --cpr-text-header-line-box: var(--alt-muted);
+  --cpr-text-icon-highlight: var(--alt-accent);
+  --cpr-text-icon-normal: var(--alt-muted);
+  --cpr-text-icon-dimmed: #a88c83;
+  --cpr-icon-actor-image-overlay-border: var(--alt-rule);
+  --color-border-light-1: var(--alt-border);
+  --color-border-light-primary: var(--alt-border);
+  --color-shadow-primary: var(--alt-accent);
+}
+
+/* Foundry chrome within this world, including explicitly themed windows. */
+html.cpr-alt-world-theme body.game,
+html.cpr-alt-world-theme body.game .themed {
+  --color-cool-3: var(--alt-border);
+  --color-cool-4: var(--alt-raised);
+  --color-cool-5: var(--alt-base);
+  --color-cool-5-50: rgb(5 5 5 / 50%);
+  --color-cool-5-75: rgb(5 5 5 / 75%);
+  --color-cool-5-90: rgb(5 5 5 / 90%);
+  --color-warm-1: var(--alt-accent);
+  --color-warm-2: var(--alt-rule);
+  --color-warm-3: var(--alt-border);
+  --color-scrollbar: var(--alt-border);
+  --color-scrollbar-border: var(--alt-base);
+}
+
+html.cpr-alt-world-theme body.game {
+  :is(#sidebar, #chat-popout, .sidebar-popout) {
+    --sidebar-background: var(--alt-rail);
+    --sidebar-separator: 1px solid var(--alt-border);
+    --sidebar-entry-hover-bg: var(--alt-raised);
+  }
+
+  :is(#sidebar, #scene-controls, #hotbar, #scene-navigation) .ui-control {
+    --control-bg-color: var(--alt-rail);
+    --control-border-color: var(--alt-border);
+    --control-hover-bg-color: var(--alt-raised);
+    --control-hover-border-color: var(--alt-rule);
+    --control-active-bg-color: #412018;
+    --control-active-border-color: var(--alt-accent);
+  }
+
+  .application > .window-header {
+    background: #100c0b;
+    border-bottom-color: var(--alt-rule);
+    color: var(--alt-text);
+  }
+
+  .application:not(.cpr-ficha-alternativa) > .window-content {
+    background: var(--alt-base);
+    color: var(--alt-text);
+    --color-text-primary: var(--alt-text);
+    --color-text-emphatic: var(--alt-text);
+    --color-text-secondary: var(--alt-muted);
+    --color-text-subtle: var(--alt-muted);
+  }
+
+  .chat-message {
+    --chat-message-background: var(--alt-surface);
+    --chat-message-border-color: var(--alt-border);
+    color: var(--alt-text);
+  }
+
+  :is(.application, #sidebar, #chat-notifications) :is(input, select, textarea) {
+    --input-background-color: var(--alt-base);
+    --input-border-color: var(--alt-border);
+    --input-text-color: var(--alt-text);
+    --input-placeholder-color: var(--alt-muted);
+    --input-focus-outline-color: var(--alt-accent);
+  }
+
+  :is(.application, #sidebar) :is(button, a.button):not(:disabled, [aria-disabled="true"], .bright) {
+    --button-background-color: var(--alt-raised);
+    --button-border-color: var(--alt-border);
+    --button-text-color: var(--alt-text);
+    --button-hover-background-color: #412018;
+    --button-hover-border-color: var(--alt-accent);
+    --button-hover-text-color: var(--alt-text);
+  }
+
+  #context-menu {
+    --background-color: var(--alt-surface);
+    --border-color: var(--alt-border);
+    --text-color: var(--alt-text);
+    --hover-text-color: var(--alt-text);
+    --group-separator: var(--alt-border);
+    --hover-entry-background: var(--alt-raised);
+  }
+}

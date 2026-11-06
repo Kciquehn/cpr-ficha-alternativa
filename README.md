@@ -6,6 +6,10 @@ Ficha opcional de personagem para Foundry VTT v13 e Cyberpunk RED v13 - PTBR 1.0
 - No topo à direita, **História** tem o Caminho da Vida e as notas. **Perícias** abre em ordem alfabética e traz atributos, busca e as opções Denso, Agrupar e Esconder zeradas. **Equipamento** tem categorias inspiradas no Companion. Programas aparece quando o personagem possui um console ou programa. **Cibernética**, **Funções** e **Efeitos** reúnem os painéis do sistema.
 - Em **Combate**, ficam as armas equipadas, armaduras e lesões críticas. Com um cyberdeck equipado, o seletor alterna entre combate físico e Netrunning, onde ficam os programas e as ações de rede.
 
+## Tema do mundo
+
+Com o módulo ativo, a paleta vermelha e preta é aplicada no mundo Cyberpunk RED. Ela abrange fichas oficiais de atores, itens e efeitos, listas, chat e cartões de rolagem, diálogos, diário, navegação de cenas e controles do Foundry. As duas versões da ficha de personagem continuam disponíveis. Mapas, retratos, cores de jogadores e indicadores de sucesso ou falha continuam usando seus próprios dados e estados.
+
 ## Instalar ou atualizar pelo Foundry
 
 1. Na tela de configuração do Foundry, abra **Módulos adicionais → Instalar módulo**.
@@ -31,3 +35,4 @@ As duas fichas abrem o mesmo ator. Os cálculos, as rolagens, os itens e os efei
 - `scripts/sheet.mjs` registra a ficha e herda os controles da ficha do sistema.
 - `templates/sheet.hbs` organiza os painéis nativos em abas. A coluna esquerda está em `templates/essentials.hbs`.
 - `styles/sheet.css` define o visual.
+- `styles/world-theme.css` aplica a paleta às superfícies do sistema e do Foundry.

@@ -328,6 +328,8 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
 }
 
 Hooks.once("init", () => {
+  if (game.system.id !== "cyberpunk-red-core") return;
+  document.documentElement.classList.add("cpr-alt-world-theme");
   foundry.documents.collections.Actors.registerSheet(
     "cpr-ficha-alternativa",
     CPRFichaAlternativa,
