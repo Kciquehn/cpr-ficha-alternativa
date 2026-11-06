@@ -701,6 +701,7 @@
 }
 
 .cpr-ficha-alternativa .cpr-alt-cyber-body {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(4rem, 10rem) minmax(0, 1fr);
   grid-template-areas:
@@ -721,7 +722,17 @@
   grid-area: bones;
   display: block;
   width: 100%;
+  aspect-ratio: 180 / 330;
   border: 0;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--alt-accent);
+  pointer-events: none;
 }
 
 .cpr-ficha-alternativa [data-cyber-region="cyberAudioSuite"] { grid-area: audio; }

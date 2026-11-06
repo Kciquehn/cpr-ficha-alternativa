@@ -2,6 +2,16 @@ import CPRCharacterActorSheet from "../../../systems/cyberpunk-red-core/modules/
 
 const CHARACTER_TEMPLATES = "systems/cyberpunk-red-core/templates/actor/character";
 
+// Endpoints in the skeleton SVG's 180 × 330 coordinate system.
+const CYBER_ARROW_TARGETS = {
+  cyberAudioSuite: [66, 39],
+  cyberEye: [106, 38],
+  cyberArm: [49, 92],
+  cyberLeg: [64, 222],
+  neuralWare: [96, 71],
+  cyberwareInternal: [84, 117],
+};
+
 const INVENTORY_CATEGORIES = [
   { id: "ammo", label: "Munição", types: ["ammo"] },
   { id: "armor", label: "Armaduras", types: ["armor"] },
@@ -22,6 +32,7 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
   #skillOptions = { dense: false, grouped: false, hideZero: false };
   #inventoryCategory = "ammo";
   #cyberwareRegion = "all";
+  #cyberArrowObserver;
 
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
@@ -77,6 +88,7 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
   }
 
   #bindCyberwareMap() {
+    this.#cyberArrowObserver?.disconnect();
     const map = this.element.querySelector(".cpr-alt-cyberware-map");
     if (!map) return;
 
@@ -106,6 +118,48 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
       show();
     });
     show();
+    this.#bindCyberArrows(map);
+  }
+
+  #bindCyberArrows(map) {
+    const layer = map.querySelector(".cpr-alt-cyber-arrows");
+    const skeleton = map.querySelector(".cpr-alt-cyber-body img");
+    const connections = Object.entries(CYBER_ARROW_TARGETS).map(([region, point]) => ({
+      button: map.querySelector(`[data-cyber-region="${region}"]`),
+      point,
+      arrow: document.createElementNS("http://www.w3.org/2000/svg", "polygon"),
+    })).filter(({ button }) => button);
+    layer.replaceChildren(...connections.map(({ arrow }) => arrow));
+
+    const draw = () => {
+      const frame = layer.getBoundingClientRect();
+      const image = skeleton.getBoundingClientRect();
+      if (!frame.width || !image.height) return;
+      for (const { button, point: [x, y], arrow } of connections) {
+        const box = button.getBoundingClientRect();
+        const fromLeft = box.right <= image.left;
+        const startX = (fromLeft ? box.right + 2 : box.left - 2) - frame.left;
+        const startY = box.top + box.height / 2 - frame.top;
+        const tipX = image.left - frame.left + image.width * x / 180;
+        const tipY = image.top - frame.top + image.height * y / 330;
+        const distance = Math.hypot(tipX - startX, tipY - startY);
+        const head = Math.min(9, distance / 3);
+        arrow.setAttribute("points", `0,-1 ${distance - head},-1 ${distance - head},-4 ${distance},0 ${distance - head},4 ${distance - head},1 0,1`);
+        const angle = Math.atan2(tipY - startY, tipX - startX) * 180 / Math.PI;
+        arrow.setAttribute("transform", `translate(${startX} ${startY}) rotate(${angle})`);
+      }
+    };
+
+    this.#cyberArrowObserver = new ResizeObserver(draw);
+    for (const element of [layer, skeleton, ...connections.map(({ button }) => button)]) {
+      this.#cyberArrowObserver.observe(element);
+    }
+    draw();
+  }
+
+  _onClose(options) {
+    this.#cyberArrowObserver?.disconnect();
+    super._onClose(options);
   }
 
   #bindSkillOptions() {

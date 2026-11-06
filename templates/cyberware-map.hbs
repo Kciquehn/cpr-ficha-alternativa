@@ -1,6 +1,7 @@
 <div class="cpr-alt-cyberware-map">
   <div class="cpr-alt-cyber-body" role="group" aria-label="Mapa de implantes por região">
     <img src="modules/cpr-ficha-alternativa/styles/cyber-skeleton.svg" alt="" draggable="false">
+    <svg class="cpr-alt-cyber-arrows" aria-hidden="true"></svg>
     {{#each (cprFindConfigObj "cyberwareTypes") as |label key|}}
       <button type="button" data-cyber-region="{{key}}" aria-pressed="false">
         {{localize label}} <span class="cpr-alt-cyber-count"></span>
