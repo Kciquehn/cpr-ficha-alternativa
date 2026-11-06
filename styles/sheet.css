@@ -704,12 +704,16 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(4rem, min(49%, 20rem)) minmax(0, 1fr);
+  grid-template-rows: auto repeat(8, minmax(min-content, 1fr));
   grid-template-areas:
     ". audio ."
     "neural . eye"
-    "arm . external"
-    "internal . borg"
-    "leg . fashion"
+    "arm . ."
+    "internal . external"
+    ". . ."
+    ". . borg"
+    "leg . ."
+    ". . fashion"
     ". . .";
   align-items: center;
   gap: 0.45rem;
@@ -720,7 +724,7 @@
 }
 
 .cpr-ficha-alternativa .cpr-alt-cyber-body img {
-  grid-area: 2 / 2 / 7 / 3;
+  grid-area: 2 / 2 / -1 / 3;
   display: block;
   width: 100%;
   height: auto;
