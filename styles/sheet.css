@@ -182,7 +182,7 @@
 
 .cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-stat {
   display: grid;
-  grid-template-rows: 5.5rem 2.45rem;
+  grid-template-rows: 2.1rem 2.45rem;
   min-width: 0;
   color: var(--alt-text);
 }
@@ -202,8 +202,6 @@
 .cpr-ficha-alternativa .cpr-alt-attributes .actor-stats-title a {
   display: grid;
   place-items: center;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   letter-spacing: 0.06em;
 }
 
@@ -597,13 +595,23 @@
 }
 
 .cpr-ficha-alternativa .lifepath-tab.active .lifepath-tab-grid {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
   grid-template-areas: "lifepath-pane notes-pane";
-  gap: 0.65rem;
+  align-items: start;
+  gap: 0.9rem;
 }
 
-.cpr-ficha-alternativa .lifepath-tab.active :is(.lifepath-section, .notes-section) {
-  padding: 0.5rem;
+.cpr-ficha-alternativa .lifepath-tab.active .lifepath-section {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+
+.cpr-ficha-alternativa .lifepath-tab.active .notes-section {
+  margin: 0;
+  padding: 0.75rem;
 }
 
 .cpr-ficha-alternativa .lifepath-section > div + br {
@@ -611,7 +619,41 @@
 }
 
 .cpr-ficha-alternativa .lifepath-section > div {
-  margin-bottom: 0.45rem;
+  min-width: 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--alt-border);
+  border-inline-start: 2px solid var(--alt-rule);
+  background: var(--alt-surface);
+}
+
+.cpr-ficha-alternativa .lifepath-tab.active :is(.lifepath-label, .notes-label) {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0;
+  background: transparent;
+  color: var(--alt-accent);
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.cpr-ficha-alternativa .lifepath-tab.active .lifepath-value {
+  margin-top: 0.35rem;
+  color: var(--alt-text);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.cpr-ficha-alternativa .lifepath-value p {
+  margin: 0;
+}
+
+.cpr-ficha-alternativa .lifepath-value p + p {
+  margin-top: 0.55em;
 }
 
 .cpr-ficha-alternativa .lifepath-tab.active :is(.notes-section, .notes-details, .note-pad) {
@@ -620,6 +662,13 @@
 
 .cpr-ficha-alternativa .lifepath-tab.active .note-pad {
   min-height: 12rem;
+  margin-top: 0.55rem;
+}
+
+.cpr-ficha-alternativa .lifepath-tab.active .note-pad .editor-content {
+  padding: 0.55rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .cpr-ficha-alternativa .note-pad prose-mirror.inactive:not([disabled]) > button.toggle {
