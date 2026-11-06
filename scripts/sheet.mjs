@@ -2,14 +2,14 @@ import CPRCharacterActorSheet from "../../../systems/cyberpunk-red-core/modules/
 
 const CHARACTER_TEMPLATES = "systems/cyberpunk-red-core/templates/actor/character";
 
-// Endpoints in the skeleton SVG's 180 × 330 coordinate system.
+// Endpoints in the skeleton image's original pixel coordinates.
 const CYBER_ARROW_TARGETS = {
-  cyberAudioSuite: [66, 39],
-  cyberEye: [106, 38],
-  cyberArm: [49, 92],
-  cyberLeg: [64, 222],
-  neuralWare: [96, 71],
-  cyberwareInternal: [84, 117],
+  cyberAudioSuite: [577, 130],
+  cyberEye: [695, 126],
+  cyberArm: [442, 379],
+  cyberLeg: [547, 1341],
+  neuralWare: [665, 68],
+  cyberwareInternal: [644, 530],
 };
 
 const INVENTORY_CATEGORIES = [
@@ -124,29 +124,41 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
   #bindCyberArrows(map) {
     const layer = map.querySelector(".cpr-alt-cyber-arrows");
     const skeleton = map.querySelector(".cpr-alt-cyber-body img");
+    const imageWidth = Number(skeleton.getAttribute("width"));
+    const imageHeight = Number(skeleton.getAttribute("height"));
     const connections = Object.entries(CYBER_ARROW_TARGETS).map(([region, point]) => ({
       button: map.querySelector(`[data-cyber-region="${region}"]`),
       point,
+      line: document.createElementNS("http://www.w3.org/2000/svg", "polyline"),
       arrow: document.createElementNS("http://www.w3.org/2000/svg", "polygon"),
     })).filter(({ button }) => button);
-    layer.replaceChildren(...connections.map(({ arrow }) => arrow));
+    layer.replaceChildren(...connections.flatMap(({ line, arrow }) => [line, arrow]));
 
     const draw = () => {
       const frame = layer.getBoundingClientRect();
       const image = skeleton.getBoundingClientRect();
       if (!frame.width || !image.height) return;
-      for (const { button, point: [x, y], arrow } of connections) {
+      for (const { button, point: [x, y], line, arrow } of connections) {
         const box = button.getBoundingClientRect();
         const fromLeft = box.right <= image.left;
         const startX = (fromLeft ? box.right + 2 : box.left - 2) - frame.left;
         const startY = box.top + box.height / 2 - frame.top;
-        const tipX = image.left - frame.left + image.width * x / 180;
-        const tipY = image.top - frame.top + image.height * y / 330;
-        const distance = Math.hypot(tipX - startX, tipY - startY);
-        const head = Math.min(9, distance / 3);
-        arrow.setAttribute("points", `0,-1 ${distance - head},-1 ${distance - head},-4 ${distance},0 ${distance - head},4 ${distance - head},1 0,1`);
-        const angle = Math.atan2(tipY - startY, tipX - startX) * 180 / Math.PI;
-        arrow.setAttribute("transform", `translate(${startX} ${startY}) rotate(${angle})`);
+        const tipX = image.left - frame.left + image.width * x / imageWidth;
+        const tipY = image.top - frame.top + image.height * y / imageHeight;
+        const region = button.dataset.cyberRegion;
+        const elbowX = (startX + tipX) / 2;
+        let points = [[startX, startY], [elbowX, startY], [elbowX, tipY], [tipX, tipY]];
+        if (region === "cyberAudioSuite") {
+          const audioX = box.left - frame.left + box.width * 0.26;
+          points = [[audioX, box.bottom - frame.top], [audioX, tipY], [tipX, tipY]];
+        } else if (region === "neuralWare") {
+          points = [[tipX, box.top - frame.top], [tipX, tipY]];
+        }
+        const [beforeX, beforeY] = points.at(-2);
+        const angle = Math.atan2(tipY - beforeY, tipX - beforeX) * 180 / Math.PI;
+        line.setAttribute("points", points.map(pair => pair.join(",")).join(" "));
+        arrow.setAttribute("points", "0,0 -10,-5 -10,5");
+        arrow.setAttribute("transform", `translate(${tipX} ${tipY}) rotate(${angle})`);
       }
     };
 

@@ -703,13 +703,14 @@
 .cpr-ficha-alternativa .cpr-alt-cyber-body {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(4rem, 10rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(4rem, min(49%, 20rem)) minmax(0, 1fr);
   grid-template-areas:
-    "audio bones eye"
-    "arm bones neural"
-    "internal bones external"
-    "leg bones borg"
-    ". bones fashion";
+    ". audio ."
+    ". . eye"
+    "arm . external"
+    "internal . borg"
+    ". neural fashion"
+    "leg . .";
   align-items: center;
   gap: 0.45rem;
   padding: 0.6rem;
@@ -719,10 +720,10 @@
 }
 
 .cpr-ficha-alternativa .cpr-alt-cyber-body img {
-  grid-area: bones;
+  grid-area: 2 / 2 / 7 / 3;
   display: block;
   width: 100%;
-  aspect-ratio: 180 / 330;
+  height: auto;
   border: 0;
 }
 
@@ -733,6 +734,18 @@
   height: 100%;
   fill: var(--alt-accent);
   pointer-events: none;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-arrows polyline {
+  fill: none;
+  stroke: var(--alt-accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-body [data-cyber-region] {
+  position: relative;
+  z-index: 1;
 }
 
 .cpr-ficha-alternativa [data-cyber-region="cyberAudioSuite"] { grid-area: audio; }
