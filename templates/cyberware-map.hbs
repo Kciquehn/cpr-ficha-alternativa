@@ -1,0 +1,22 @@
+<div class="cpr-alt-cyberware-map">
+  <div class="cpr-alt-cyber-body" role="group" aria-label="Mapa de implantes por região">
+    <img src="modules/cpr-ficha-alternativa/styles/cyber-skeleton.svg" alt="" draggable="false">
+    {{#each (cprFindConfigObj "cyberwareTypes") as |label key|}}
+      <button type="button" data-cyber-region="{{key}}" aria-pressed="false">
+        {{localize label}} <span class="cpr-alt-cyber-count"></span>
+      </button>
+    {{/each}}
+  </div>
+  <button type="button" data-cyber-region="all" aria-pressed="true">Todas as regiões</button>
+  <div class="items-list cyberware-list">
+    {{#each (cprFindConfigObj "cyberwareTypes") as |label key|}}
+      <div data-cyber-panel="{{key}}">
+        <h3 class="items-header">{{localize label}}</h3>
+        <ol class="items-list">
+          {{> "systems/cyberpunk-red-core/templates/actor/character/right-pane/tabs/cyberware/cpr-cyberware-content.hbs" (cprMergeForPartialArg "actor,cyberwareType" ../actor key)}}
+        </ol>
+        <p class="cpr-alt-cyber-empty">Nenhum implante instalado nesta região.</p>
+      </div>
+    {{/each}}
+  </div>
+</div>

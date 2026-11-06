@@ -21,6 +21,7 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
   #skillQuery = "";
   #skillOptions = { dense: false, grouped: false, hideZero: false };
   #inventoryCategory = "ammo";
+  #cyberwareRegion = "all";
 
   static DEFAULT_OPTIONS = {
     classes: ["cpr-ficha-alternativa"],
@@ -36,7 +37,8 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
         `${CHARACTER_TEMPLATES}/left-pane/cpr-left-pane-stats.hbs`,
         `${CHARACTER_TEMPLATES}/right-pane/cpr-skills.hbs`,
         `${CHARACTER_TEMPLATES}/right-pane/cpr-gear.hbs`,
-        `${CHARACTER_TEMPLATES}/right-pane/cpr-cyberware.hbs`,
+        "modules/cpr-ficha-alternativa/templates/cyberware-map.hbs",
+        `${CHARACTER_TEMPLATES}/right-pane/tabs/cyberware/cpr-cyberware-content.hbs`,
         `${CHARACTER_TEMPLATES}/right-pane/cpr-effects.hbs`,
         `${CHARACTER_TEMPLATES}/bottom-pane/cpr-role-tab.hbs`,
         `${CHARACTER_TEMPLATES}/bottom-pane/cpr-fight-tab.hbs`,
@@ -71,6 +73,39 @@ class CPRFichaAlternativa extends CPRCharacterActorSheet {
     nav.addEventListener("click", sync);
     this.#bindSkillOptions();
     this.#bindInventoryCategories(context.altInventoryCategories);
+    this.#bindCyberwareMap();
+  }
+
+  #bindCyberwareMap() {
+    const map = this.element.querySelector(".cpr-alt-cyberware-map");
+    if (!map) return;
+
+    const buttons = map.querySelectorAll("[data-cyber-region]");
+    const panels = map.querySelectorAll("[data-cyber-panel]");
+    for (const button of buttons) {
+      const panel = Array.from(panels).find(panel => panel.dataset.cyberPanel === button.dataset.cyberRegion);
+      const count = panel?.querySelectorAll("li.item[data-item-id]").length;
+      if (count) {
+        button.querySelector(".cpr-alt-cyber-count").textContent = count;
+        button.classList.add("has-implants");
+      }
+    }
+
+    const show = () => {
+      for (const button of buttons) {
+        button.setAttribute("aria-pressed", String(button.dataset.cyberRegion === this.#cyberwareRegion));
+      }
+      for (const panel of panels) {
+        panel.hidden = this.#cyberwareRegion !== "all" && panel.dataset.cyberPanel !== this.#cyberwareRegion;
+      }
+    };
+    map.addEventListener("click", event => {
+      const button = event.target.closest("[data-cyber-region]");
+      if (!button) return;
+      this.#cyberwareRegion = button.dataset.cyberRegion;
+      show();
+    });
+    show();
   }
 
   #bindSkillOptions() {

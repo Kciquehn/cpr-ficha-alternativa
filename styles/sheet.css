@@ -661,14 +661,111 @@
 }
 
 .cpr-ficha-alternativa .lifepath-tab.active .note-pad {
+  display: block;
   min-height: 12rem;
   margin-top: 0.55rem;
 }
 
+.cpr-ficha-alternativa .note-pad :is(prose-mirror, .editor-container, .editor-content) {
+  min-width: 0;
+  height: auto;
+  max-height: none;
+}
+
+.cpr-ficha-alternativa .note-pad .editor-container {
+  flex: none;
+}
+
 .cpr-ficha-alternativa .lifepath-tab.active .note-pad .editor-content {
+  position: relative;
+  inset: auto;
+  min-height: 12rem;
+  overflow: visible;
   padding: 0.55rem;
+  padding-inline-end: 1.9rem;
   line-height: 1.55;
   overflow-wrap: anywhere;
+}
+
+.cpr-ficha-alternativa .note-pad prose-mirror menu {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+.cpr-ficha-alternativa .note-pad .editor-content :is(img, table, pre) {
+  max-width: 100%;
+}
+
+.cpr-ficha-alternativa .note-pad .editor-content pre {
+  white-space: pre-wrap;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(4rem, 10rem) minmax(0, 1fr);
+  grid-template-areas:
+    "audio bones eye"
+    "arm bones neural"
+    "internal bones external"
+    "leg bones borg"
+    ". bones fashion";
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem;
+  margin-bottom: 0.65rem;
+  border: 1px solid var(--alt-rule);
+  background: var(--alt-surface);
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-body img {
+  grid-area: bones;
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+.cpr-ficha-alternativa [data-cyber-region="cyberAudioSuite"] { grid-area: audio; }
+.cpr-ficha-alternativa [data-cyber-region="cyberEye"] { grid-area: eye; }
+.cpr-ficha-alternativa [data-cyber-region="cyberArm"] { grid-area: arm; }
+.cpr-ficha-alternativa [data-cyber-region="cyberLeg"] { grid-area: leg; }
+.cpr-ficha-alternativa [data-cyber-region="neuralWare"] { grid-area: neural; }
+.cpr-ficha-alternativa [data-cyber-region="cyberwareInternal"] { grid-area: internal; }
+.cpr-ficha-alternativa [data-cyber-region="cyberwareExternal"] { grid-area: external; }
+.cpr-ficha-alternativa [data-cyber-region="borgware"] { grid-area: borg; }
+.cpr-ficha-alternativa [data-cyber-region="fashionware"] { grid-area: fashion; }
+
+.cpr-ficha-alternativa .cpr-alt-cyberware-map [data-cyber-region] {
+  min-width: 0;
+  height: auto;
+  min-height: 2rem;
+  padding: 0.3rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyberware-map [aria-pressed="true"] {
+  border-color: var(--alt-accent);
+  color: var(--alt-accent);
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-count:not(:empty) {
+  color: var(--alt-accent);
+  font-weight: bold;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyberware-map [data-cyber-panel][hidden],
+.cpr-ficha-alternativa .cpr-alt-cyberware-map [data-cyber-panel]:has(li.item) .cpr-alt-cyber-empty,
+.cpr-ficha-alternativa .cpr-alt-cyberware-map:has([data-cyber-region="all"][aria-pressed="true"]) [data-cyber-panel]:not(:has(li.item)) {
+  display: none;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyberware-map h3 {
+  padding: 0.35rem 0.5rem;
+  margin: 0;
+}
+
+.cpr-ficha-alternativa .cpr-alt-cyber-empty {
+  padding: 0.4rem 0.5rem;
 }
 
 .cpr-ficha-alternativa .note-pad prose-mirror.inactive:not([disabled]) > button.toggle {
